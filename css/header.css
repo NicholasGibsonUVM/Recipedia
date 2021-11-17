@@ -1,0 +1,14 @@
+header {
+  grid-area: header;
+  background-color: #cb8589;
+  padding-left: 5%;
+}
+
+header h2, header h1 {
+    display: inline-block;
+}
+
+header h2 {
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 1.4em;
+}

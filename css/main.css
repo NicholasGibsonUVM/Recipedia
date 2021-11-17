@@ -15,9 +15,3 @@ body {
     margin: auto;
     background-color: #f6eddf;
   }
-  
-  header {
-    grid-area: header;
-    background-color: #cb8589;
-    padding-left: 5%;
-  }
