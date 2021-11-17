@@ -1,0 +1,22 @@
+body {
+    display: grid;
+    grid-template-areas:
+      "header"
+      "nav"
+      "main"
+      "images"
+      "footer";
+    border: none;
+    line-height: 1.4em;
+    font-weight: lighter;
+    font-size: medium;
+    padding: 0%;
+    margin: auto;
+    background-color: #f6eddf;
+  }
+  
+  header {
+    grid-area: header;
+    background-color: #cb8589;
+    padding-left: 5%;
+  }

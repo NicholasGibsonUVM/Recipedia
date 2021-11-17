@@ -1,0 +1,62 @@
+/* NAVIGATION */
+nav {
+  padding-bottom: 1%;
+  grid-area: nav;
+  /*position: sticky;*/
+  top: 0;
+  max-width: 100%;
+  text-align: center;
+  background-color: #cb8589;
+  font-family: cursive;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-rows: 100%;
+}
+
+
+/* NAV POSTION */
+nav a,
+nav div {
+  display: inline-block;
+  text-decoration: none;
+  color: #211c1ca1;
+  padding: 0.5% 3% 0.5% 3%;
+  margin: 1%;
+}
+
+nav .first {
+  grid-column: 2;
+}
+
+nav .searchBar {
+  grid-column: 4 / span 2;
+}
+
+nav .signUp {
+  grid-column: 7;
+  border-right: solid rgba(0, 0, 0, 0.521);
+}
+
+nav .login {
+  grid-column: 8;
+}
+
+/* Search Bar */
+nav .searchBar form{
+  display: grid;
+  grid-template-columns: 90% 10%;
+}
+
+nav .searchBar input{
+  grid-column: 1;
+}
+
+nav .searchBar button{
+  grid-column: 2;
+}
+
+
+nav a.activePage {
+  color: #161313;
+}
+
