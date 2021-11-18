@@ -1,7 +1,51 @@
 main {
     width: 60%;
+    height: 100%;
     margin: auto;
 }
-form.signUp fieldset{
+
+main form {
+    border-radius: 1em;
+    max-width: 80%;
+    background-color: #796465;
+    margin: auto;
+    margin-top: 5%;
+    height: 85%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(5, 20%);
+    padding: 2%;
+}
+
+main form.login {
+    height: 50%;
+    grid-template-rows: repeat(3, 33%);
+}
+
+main form fieldset{
     border: none;
+    display: grid;
+    height: 1.4em;
+    grid-template-columns: 20% 70% 10%;
+    grid-column-gap: 2%;
+}
+
+main form label {
+    justify-self: right;
+}
+
+main form input{
+    border-radius: .5em;
+    border-style: none;
+    text-indent: 1em;
+}
+
+main form fieldset button{
+    grid-column: 2;
+    border-radius: .5em;
+    border-style: none;
+    justify-self: right;
+    background-color: #DDE8B9;
+    font-family: inherit;
+    padding: 2% 3% 2% 3%;
 }

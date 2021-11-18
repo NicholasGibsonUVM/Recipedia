@@ -1,9 +1,6 @@
 <?php
 include 'top.php';
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 $txtEmail = '';
 $txtUsername = '';
 $txtPassword = '';
@@ -74,8 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+<!-- Add Error Messages In -->
 <main>
     <link rel="stylesheet" href="../css/signup.css?version=<?php print time(); ?>" type="text/css">
+    <h1>Sign Up</h1>
     <form class="signUp" method="post">
         <fieldset class='email'>
             <label for='txtEmail'>Email</label>
@@ -94,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type='text' name='txtConfirmPassword' id='txtConfirmPassword' class='confirmPassword' placeholder="Confirm Password">
         </fieldset>
         <fieldset class='submit'>
-            <input type='submit' name='signupForm' value='submit'>
+            <button type='submit' name='submit' id='submit' value='submit'>Submit</button>
         </fieldset>
     </form>
 </main>

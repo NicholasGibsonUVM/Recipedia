@@ -1,12 +1,20 @@
+html {
+  height: 100%;
+  display: flex;
+}
+
 body {
+    flex: 1;
+    margin: 0;
     display: grid;
+    height: 100%;
     grid-template-areas:
       "header"
       "nav"
       "main"
-      "images"
       "footer";
     border: none;
+    grid-template-rows: 10% 5% 70% 15%;
     line-height: 1.4em;
     font-family: 'Outfit', sans-serif;
     font-weight: lighter;
