@@ -34,12 +34,12 @@ nav .searchBar {
   grid-column: 4 / span 2;
 }
 
-nav .signUp {
+nav .signUp, nav .myRecipes {
   grid-column: 7;
   border-right: solid rgba(0, 0, 0, 0.521);
 }
 
-nav .login {
+nav .login, nav .logout {
   grid-column: 8;
 }
 

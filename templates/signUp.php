@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $values = array($txtUsername, $txtEmail, $txtPassword);
         if ($thisDatabaseWriter->insert($sqlInsert, $values)) {
             header("Location: https://nsgibson.w3.uvm.edu/cs148/Recipedia/templates/index.php", true, 303);
-            exit();
+            die();
         } else {
             print '<p>Something went wrong</p>';
             if (DEBUG) {
