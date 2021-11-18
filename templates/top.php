@@ -20,6 +20,7 @@ include '../lib/constants.php';
 print '<!-- make Database connections -->' . PHP_EOL;
 require_once('../lib/Database.php');
 require_once('../lib/Picture.php');
+require_once('../lib/functions.php');
 $thisDatabaseReader = new Database('nsgibson_reader', 'r', DATABASE_NAME);
 $thisDatabaseWriter = new Database('nsgibson_writer', 'w', DATABASE_NAME);
 print '<body class="' . PATH_PARTS['filename'] . '">' . PHP_EOL;

@@ -15,7 +15,7 @@ define('BASE_PATH', DOMAIN . PATH_PARTS['dirname'] . '/');
 
 define('LIB_PATH', 'lib/');
 
-define('DATABASE_NAME', 'NSGIBSON_cs148_lab4');
+define('DATABASE_NAME', 'NSGIBSON_cs148_final');
 
 if (DEBUG) {
     print '<p>Domain ' . DOMAIN;

@@ -1,10 +1,82 @@
 <?php
 include 'top.php';
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$txtEmail = '';
+$txtUsername = '';
+$txtPassword = '';
+$txtConfirmPassword = '';
+
+if (DEBUG) {
+    print_r($_POST);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $dataIsGood = true;
+    $txtEmail = filter_var(getData('txtEmail'), FILTER_SANITIZE_EMAIL);
+    $txtUsername = getData('txtUsername');
+    $txtPassword = getData('txtPassword');
+    $txtConfirmPassword = getData('txtConfirmPassword');
+
+    $sqlUsername = 'SELECT `pmkUsername` FROM `tblUser` WHERE `pmkUsername` = ?';
+    $valueUsername = array($txtUsername);
+
+    $sqlEmail = 'SELECT `fldEmail` FROM `tblUser` WHERE `fldEmail` = ?';
+    $valueEmail = array($txtEmail);
+    if (DEBUG) {
+        print $thisDatabaseReader->displayQuery($sqlUsername, $valueUsername);
+        print $thisDatabaseReader->displayQuery($sqlEmail, $valueEmail);
+    }
+    if ($txtPassword != $txtConfirmPassword) {
+        $dataIsGood = false;
+        print '<p>Passwords Don\'t match</p>';
+    }
+    if ($txtPassword == '') {
+        $dataIsGood = false;
+        print '<p>Must Enter Password</p>';
+    }
+    if ($txtUsername == '') {
+        $dataIsGood = false;
+        print '<p>Must Enter Username</p>';
+    } else {
+        $check = $thisDatabaseReader->select($sqlUsername, $valueUsername);
+        if (count($check, COUNT_RECURSIVE) == 2) {
+            $dataIsGood = false;
+            print '<p>Username Already in Use</p>';
+        }
+    }
+    if ($txtEmail == '') {
+        $dataIsGood = false;
+        print '<p>Must Enter Email</p>';
+    } else {
+        $check = $thisDatabaseReader->select($sqlEmail, $valueEmail);
+        if (count($check, COUNT_RECURSIVE) == 2) {
+            $dataIsGood = false;
+            print '<p>Email Already in Use</p>';
+        }
+    }
+
+    if ($dataIsGood) {
+        $sqlInsert = 'INSERT INTO `tblUser`(`pmkUsername`, `fldEmail`, `fldPassword`) VALUES (?,?,?)';
+        $values = array($txtUsername, $txtEmail, $txtPassword);
+        if ($thisDatabaseWriter->insert($sqlInsert, $values)) {
+            header("Location: https://nsgibson.w3.uvm.edu/cs148/Recipedia/templates/index.php", true, 303);
+            exit();
+        } else {
+            print '<p>Something went wrong</p>';
+            if (DEBUG) {
+                print $thisDatabaseReader->displayQuery($sqlInsert, $values);
+            }
+        }
+    }
+}
 ?>
 
 <main>
     <link rel="stylesheet" href="../css/signup.css?version=<?php print time(); ?>" type="text/css">
-    <form class="signUp" method="post" action="../validation/signUp.php">
+    <form class="signUp" method="post">
         <fieldset class='email'>
             <label for='txtEmail'>Email</label>
             <input type='text' name='txtEmail' id='txtEmail' class='email' placeholder="Email">
@@ -20,6 +92,9 @@ include 'top.php';
         <fieldset class='confirmPassword'>
             <label for='txtConfirmPassword'>Confirm Password</label>
             <input type='text' name='txtConfirmPassword' id='txtConfirmPassword' class='confirmPassword' placeholder="Confirm Password">
+        </fieldset>
+        <fieldset class='submit'>
+            <input type='submit' name='signupForm' value='submit'>
         </fieldset>
     </form>
 </main>

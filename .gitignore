@@ -1,3 +1,4 @@
 .htaccess
 .user.ini
+php.ini
 lib/pass.php
