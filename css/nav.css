@@ -24,6 +24,7 @@ nav div {
   font-size: medium;
   transition-property: font-size;
   transition-duration: 1s;
+  align-self: center;
 }
 
 nav .first {

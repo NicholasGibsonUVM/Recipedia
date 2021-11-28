@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($dataIsGood) {
         $_SESSION['username'] = $txtUsername;
-        header("Location: index.php", true, 303);
+        header("Location: https://nsgibson.w3.uvm.edu/cs148/Recipedia/templates/index.php", true, 303);
         die();
     }
 }
