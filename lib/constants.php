@@ -1,5 +1,5 @@
 <?php 
-define('DEBUG', false);
+define('DEBUG', true);
 
 $_SERVER = filter_input_array(INPUT_SERVER, FILTER_SANITIZE_STRING);
 

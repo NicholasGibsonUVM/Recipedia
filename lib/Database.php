@@ -143,4 +143,16 @@ class DataBase
             return '<p>' . $query . '</p>' . PHP_EOL;
         }
     }
+
+    public function transactionStart() {
+        $this->pdo->beginTransaction();
+    }
+
+    public function transactionComplete() {
+        $this->pdo->commit();
+    }
+
+    public function transactionFailed() {
+        $this->pdo->rollBack();
+    }
 }

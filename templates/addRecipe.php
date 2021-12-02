@@ -67,61 +67,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $recipeValues[4] = $description;
         $recipeValues[5] = $author;
 
-        if (move_uploaded_file($_FILES["txtRecipeImage"]["tmp_name"], $target_file) && $thisDatabaseWriter->insert($recipeInsert, $recipeValues)) {
-            for ($i = 0; $i < $ingredientAmount; $i++) {
-                $ingredientInsert = 'INSERT INTO `tblIngredients` SET ';
-                $ingredientInsert .= '`fldName` = ?, ';
-                $ingredientInsert .= '`fldUnit` = ?';
-                $ingredientValues[0] = $ingredientNameArray[$i];
-                $ingredientValues[1] = $ingredientUnitArray[$i];
-                if (!$thisDatabaseWriter->insert($ingredientInsert, $ingredientValues)) {
-                    print $thisDatabaseReader->displayQuery($ingredientInsert, $ingredientValues);
-                    print "<p>Failed at ingredient insert</p>";
-                }
+        $thisDatabaseWriter->transactionStart();
+
+        if (move_uploaded_file($_FILES["txtRecipeImage"]["tmp_name"], $target_file)) {
+            if ($thisDatabaseWriter->insert($recipeInsert, $recipeValues)) {
                 $selectSQL = 'SELECT `pmkIngredientId` FROM `tblIngredients` ORDER BY `pmkIngredientId` DESC Limit 1';
                 $id = $thisDatabaseReader->select($selectSQL);
-                $recipeIngredientInsert = 'INSERT INTO `tblRecipeIngredient` SET ';
-                $recipeIngredientInsert .= '`fpkRecipeName` = ?, ';
-                $recipeIngredientInsert .= '`fpkIngredientId` = ?, ';
-                $recipeIngredientInsert .= '`fldAmount` = ?';
-                $recipeIngredientValues[0] = $name;
-                $recipeIngredientValues[1] = (int) $id[0]['pmkIngredientId'];
-                $recipeIngredientValues[2] = (int) $ingredientAmountArray[$i];
-                if (!$thisDatabaseWriter->insert($recipeIngredientInsert, $recipeIngredientValues)) {
-                    print $thisDatabaseReader->displayQuery($recipeIngredientInsert, $recipeIngredientValues);
-                    print "<p>Failed at recipeIngredient insert</p>";
-                }
-            }
-            if ($dataSubmited == true) {
-                for ($i = 0; $i < $instructionAmount; $i++) {
-                    $instructionInsert = 'INSERT INTO `tblInstruction` SET `fldInstructionDescription` = ?';
-                    $instructionValues[0] = $instructionDescriptionArray[$i];
-                    if (!$thisDatabaseWriter->insert($instructionInsert, $instructionValues)) {
-                        print $thisDatabaseReader->displayQuery($instructionInsert, $instructionValues);
-                        print "<p>Failed at Instruction Insert</p>";
+                for ($i = 0; $i < $ingredientAmount; $i++) {
+                    $ingredientInsert = 'INSERT INTO `tblIngredients` SET ';
+                    $ingredientInsert .= '`fldName` = ?, ';
+                    $ingredientInsert .= '`fldUnit` = ?';
+                    $ingredientValues[0] = $ingredientNameArray[$i];
+                    $ingredientValues[1] = $ingredientUnitArray[$i];
+                    if (!$thisDatabaseWriter->insert($ingredientInsert, $ingredientValues)) {
+                        print $thisDatabaseReader->displayQuery($ingredientInsert, $ingredientValues);
+                        print "<p>Failed at ingredient insert</p>";
+                        $dataSubmited = false;
                     }
+                    $recipeIngredientInsert = 'INSERT INTO `tblRecipeIngredient` SET ';
+                    $recipeIngredientInsert .= '`fpkRecipeName` = ?, ';
+                    $recipeIngredientInsert .= '`fpkIngredientId` = ?, ';
+                    $recipeIngredientInsert .= '`fldAmount` = ?';
+                    $recipeIngredientValues[0] = $name;
+                    $recipeIngredientValues[1] = (int) $id[0]['pmkIngredientId'] + ($i + 1);
+                    $recipeIngredientValues[2] = (int) $ingredientAmountArray[$i];
+                    if (!$thisDatabaseWriter->insert($recipeIngredientInsert, $recipeIngredientValues)) {
+                        print $thisDatabaseReader->displayQuery($recipeIngredientInsert, $recipeIngredientValues);
+                        print "<p>Failed at recipeIngredient insert</p>";
+                        $dataSubmited = false;
+                    }
+                }
+                if ($dataSubmited == true) {
                     $selectSQL = 'SELECT `pmkInstructionId` FROM `tblInstruction` ORDER BY `pmkInstructionId` DESC Limit 1';
                     $id = $thisDatabaseReader->select($selectSQL);
-                    $recipeInstructionInsert = 'INSERT INTO `tblRecipeInstruction` SET ';
-                    $recipeInstructionInsert .= '`fpkRecipeName` = ?, ';
-                    $recipeInstructionInsert .= '`fpkInstructionId` = ?, ';
-                    $recipeInstructionInsert .= '`fldOrder` = ?';
-                    $recipeInstructionValues[0] = $name;
-                    $recipeInstructionValues[1] = (int) $id[0]['pmkInstructionId'];
-                    $recipeInstructionValues[2] = (int) $i + 1;
-                    if (!$thisDatabaseWriter->insert($recipeInstructionInsert, $recipeInstructionValues)) {
-                        print $thisDatabaseReader->displayQuery($recipeInstructionInsert, $recipeInstructionValues);
-                        print "<p>Failed at recipeInstruction Insert";
+                    for ($i = 0; $i < $instructionAmount; $i++) {
+                        $instructionInsert = 'INSERT INTO `tblInstruction` SET `fldInstructionDescription` = ?';
+                        $instructionValues[0] = $instructionDescriptionArray[$i];
+                        if (!$thisDatabaseWriter->insert($instructionInsert, $instructionValues)) {
+                            print $thisDatabaseReader->displayQuery($instructionInsert, $instructionValues);
+                            print "<p>Failed at Instruction Insert</p>";
+                            $dataSubmited = false;
+                        }
+                        $recipeInstructionInsert = 'INSERT INTO `tblRecipeInstruction` SET ';
+                        $recipeInstructionInsert .= '`fpkRecipeName` = ?, ';
+                        $recipeInstructionInsert .= '`fpkInstructionId` = ?, ';
+                        $recipeInstructionInsert .= '`fldOrder` = ?';
+                        $recipeInstructionValues[0] = $name;
+                        $recipeInstructionValues[1] = (int) $id[0]['pmkInstructionId'] + ($i + 1);
+                        $recipeInstructionValues[2] = (int) $i + 1;
+                        if (!$thisDatabaseWriter->insert($recipeInstructionInsert, $recipeInstructionValues)) {
+                            print $thisDatabaseReader->displayQuery($recipeInstructionInsert, $recipeInstructionValues);
+                            print "<p>Failed at recipeInstruction Insert";
+                            $dataSubmited = false;
+                        }
                     }
+                }
+            } else {
+                $dataSubmited = false;
+                if (DEBUG) {
+                    print '<p> Failed at first insert </p>';
+                    print $thisDatabaseReader->displayQuery($recipeInsert, $recipeValues);
+                    print '<p>' . $target_file . '</p>';
                 }
             }
         } else {
             $dataSubmited = false;
             if (DEBUG) {
-                print '<p> Failed at first insert </p>';
-                print $thisDatabaseReader->displayQuery($recipeInsert, $recipeValues);
-                print '<p>' . $target_file . '</p>';
+                print '<p> Failed at moving picture </p>';
             }
+        }
+        if ($dataSubmited) {
+            $thisDatabaseWriter->transactionComplete();
+        } else {
+            $thisDatabaseWriter->transactionFailed();
         }
     }
 }
@@ -135,15 +153,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <section class='recipe'>
             <fieldset class='recipeName'>
                 <label for='txtRecipeName'>Name</label>
-                <input type='text' name='txtRecipeName' id='txtRecipeName' class='recipeName'>
+                <input type='text' name='txtRecipeName' id='txtRecipeName' class='recipeName' value='<?php print $name; ?>'>
             </fieldset>
             <fieldset class='recipeDescription'>
                 <label for='txtRecipeDescription'>Description</label>
-                <textarea name='txtRecipeDescription' id='txtRecipeDescription' rows="5"></textarea>
+                <textarea name='txtRecipeDescription' id='txtRecipeDescription' rows="5"><?php print $description; ?></textarea>
             </fieldset>
             <fieldset class='recipeTime'>
                 <label for='txtRecipeTime'>Time Required</label>
-                <input type='text' name='txtRecipeTime' id='txtRecipeTime' class='recipeTime' placeholder="Hours:Minutes">
+                <input type='text' name='txtRecipeTime' id='txtRecipeTime' class='recipeTime' placeholder="Hours:Minutes" value='<?php print $time; ?>'>
             </fieldset>
             <fieldset class="recipeImage">
                 <label for="txtRecipeImage">Image</label>
