@@ -5,8 +5,9 @@ main {
 }
 
 main form {
-    border-radius: 1em;
-    max-width: 80%;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px 1px #000000;
+    max-width: 60%;
     background-color: #796465;
     margin: auto;
     margin-top: 5%;

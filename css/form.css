@@ -1,6 +1,8 @@
 .form {
     width: 40%;
     padding: 2%;
+    border-radius: 5px;
+    background-color: #796465;
     margin: auto;
     margin-top: 3%;
     box-shadow: 0 1px 5px 1px #000000;
@@ -30,6 +32,11 @@ textarea, input {
     resize: none;
     line-height: 2em;
     width: 100%;
+    background-color: rgb(250, 250, 250);
+}
+
+.recipeImage {
+    background-color: #796465;
 }
 
 div fieldset {
