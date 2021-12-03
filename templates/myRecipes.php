@@ -17,21 +17,12 @@ if (DEBUG) {
     <a href='addRecipe.php'>Add A Recipe!</a>
     <section class='createdRecipes'>
         <?php 
-        foreach ($userCreatedRecipes as $userCreatedRecipe) {
-            print '<section class="createdRecipe">';
-            print '<a href="displayRecipe?name=' . $userCreatedRecipe['pmkRecipeName'] . '">';
-            print '<figure>' . PHP_EOL;
-            print ' <img src="../images/' . $userCreatedRecipe['fldPicture'] . '" alt="' . $userCreatedRecipe['pmkRecipeName'] . '">';
-            print '</figure>';
-            print '<h1>' . $userCreatedRecipe['pmkRecipeName'] . '</h1>';
-            print '<h2>' . $userCreatedRecipe['fldTime'] . '</h2>';
-            print '<p>' . $userCreatedRecipe['fldDescription'] . '</p>';
-            print '</a>';
-            print '</section>';
-        }
+        recipePreview($userCreatedRecipes);
         ?>
     </section>
     <section class='savedRecipes'>
-
+        <?php
+        recipePreview($userSavedRecipes);
+        ?>
     </section>
 </main>
