@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $recipeValues[4] = $description;
         $recipeValues[5] = $author;
 
-        $thisDatabaseWriter->transactionStart();
+       $thisDatabaseWriter->transactionStart();
 
         if (move_uploaded_file($_FILES["txtRecipeImage"]["tmp_name"], $target_file)) {
             if ($thisDatabaseWriter->insert($recipeInsert, $recipeValues)) {
@@ -82,8 +82,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         print "<p>Failed at ingredient insert</p>";
                         $dataSubmited = false;
                     }
-                    $selectSQL = 'SELECT `pmkIngredientId` FROM `tblIngredients` ORDER BY `pmkIngredientId` DESC Limit 1';
-                    $id = $thisDatabaseReader->select($selectSQL);
+                    $selectSQL = 'SELECT LAST_INSERT_ID()';
+                    $id = $thisDatabaseWriter->select($selectSQL);
                     if (DEBUG) {
                         print_r($id);
                     }
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $recipeIngredientInsert .= '`fpkIngredientId` = ?, ';
                     $recipeIngredientInsert .= '`fldAmount` = ?';
                     $recipeIngredientValues[0] = $name;
-                    $recipeIngredientValues[1] = (int) $id[0]['pmkIngredientId'];
+                    $recipeIngredientValues[1] = (int) $id[0]['LAST_INSERT_ID()'];
                     $recipeIngredientValues[2] = $ingredientAmountArray[$i];
                     if (!$thisDatabaseWriter->insert($recipeIngredientInsert, $recipeIngredientValues)) {
                         print $thisDatabaseReader->displayQuery($recipeIngredientInsert, $recipeIngredientValues);
@@ -105,12 +105,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $instructionInsert = 'INSERT INTO `tblInstruction` SET `fldInstructionDescription` = ?';
                         $instructionValues[0] = $instructionDescriptionArray[$i];
                         if (!$thisDatabaseWriter->insert($instructionInsert, $instructionValues)) {
-                            print $thisDatabaseReader->displayQuery($instructionInsert, $instructionValues);
+                            print $thisDatabaseWriter->displayQuery($instructionInsert, $instructionValues);
                             print "<p>Failed at Instruction Insert</p>";
                             $dataSubmited = false;
                         }
-                        $selectSQL = 'SELECT `pmkInstructionId` FROM `tblInstruction` ORDER BY `pmkInstructionId` DESC Limit 1';
-                        $id = $thisDatabaseReader->select($selectSQL);
+                        $selectSQL = 'SELECT LAST_INSERT_ID()';
+                        $id = $thisDatabaseWriter->select($selectSQL);
                         if (DEBUG) {
                             print_r($id);
                         }
@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $recipeInstructionInsert .= '`fpkInstructionId` = ?, ';
                         $recipeInstructionInsert .= '`fldOrder` = ?';
                         $recipeInstructionValues[0] = $name;
-                        $recipeInstructionValues[1] = (int) $id[0]['pmkInstructionId'];
+                        $recipeInstructionValues[1] = (int) $id[0]['LAST_INSERT_ID()'];
                         $recipeInstructionValues[2] = (int) $i + 1;
                         if (!$thisDatabaseWriter->insert($recipeInstructionInsert, $recipeInstructionValues)) {
                             print $thisDatabaseReader->displayQuery($recipeInstructionInsert, $recipeInstructionValues);
