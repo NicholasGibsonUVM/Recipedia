@@ -1,0 +1,26 @@
+.createdRecipes, .savedRecipes, .returnedRecipes {
+    margin-left: 2%;
+    margin-right: 2%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 1%;
+}
+
+.recipePreview {
+    text-align: center;
+    box-shadow: 0 1px 5px 1px #000000;
+    flex: 1;
+}
+
+.recipePreview a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.recipePicture img {
+    height:250px;
+    width:400px;
+    object-fit: contain;
+}

@@ -155,4 +155,8 @@ class DataBase
     public function transactionFailed() {
         $this->pdo->rollBack();
     }
+
+    public function insertId() {
+        return $this->pdo->lastInsertId();
+    }
 }

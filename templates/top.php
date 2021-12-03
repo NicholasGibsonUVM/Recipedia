@@ -16,6 +16,7 @@
       <link rel="stylesheet" href="../css/header.css?version=<?php print time(); ?>" type="text/css">
       <link rel="stylesheet" href="../css/nav.css?version=<?php print time(); ?>" type="text/css">
       <link rel="stylesheet" href="../css/form.css?version=<?php print time(); ?>" type="text/css">
+      <link rel="stylesheet" href="../css/recipePreview.css?version=<?php print time(); ?>" type="text/css">
 </head>
 <?php
 include '../lib/constants.php';

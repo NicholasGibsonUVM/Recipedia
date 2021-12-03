@@ -13,7 +13,7 @@ function recipePreview($recipeArray) {
     foreach ($recipeArray as $recipe) {
         print '<section class="recipePreview">';
         print '<a href="displayRecipe.php?name=' . $recipe['pmkRecipeName'] . '">';
-        print '<figure>' . PHP_EOL;
+        print '<figure class="recipePicture">' . PHP_EOL;
         print ' <img src="../images/' . $recipe['fldPicture'] . '" alt="' . $recipe['pmkRecipeName'] . '">';
         print '</figure>';
         print '<h1>' . $recipe['pmkRecipeName'] . '</h1>';
@@ -27,7 +27,7 @@ function recipePreview($recipeArray) {
 function recipe($recipeArray, $ingredientArray, $instructionArray) {
     foreach ($recipeArray as $recipe) {
         print '<section class="recipeTop">';
-        print '<figure>' . PHP_EOL;
+        print '<figure class="recipePicture">' . PHP_EOL;
         print ' <img src="../images/' . $recipe['fldPicture'] . '" alt="' . $recipe['pmkRecipeName'] . '">';
         print '</figure>';
         print '<h1>' . $recipe['pmkRecipeName'] . '</h1>';

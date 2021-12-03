@@ -28,14 +28,14 @@ fieldset {
     justify-self: center;
 }
 
-textarea, input {
+.form textarea, .form input {
     resize: none;
     line-height: 2em;
     width: 100%;
     background-color: rgb(250, 250, 250);
 }
 
-.recipeImage {
+.form .recipeImage {
     background-color: #796465;
 }
 
