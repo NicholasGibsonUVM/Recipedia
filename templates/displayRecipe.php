@@ -32,16 +32,31 @@ if (DEBUG) {
     print $thisDatabaseReader->displayQuery($selectInstructions);
 }
 
+$saved = false;
+$author = false;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $save = getData('save');
+    if (DEBUG) {
+        print $save;
+    }
+
     if (isset($_SESSION['username'])) {
-        $saveInsert = 'INSERT INTO `tblUserRecipe` SET ';
-        $saveInsert .= '`fpkUsernameSaved` = ?, ';
-        $saveInsert .= '`fpkName` = ?';
         $saveValues[0] = $_SESSION['username'];
         $saveValues[1] = $search;
-        $selectCheck = 'SELECT * FROM `tblUserRecipe` WHERE `fpkUsernameSaved` = ? AND `fpkName` = ?';
-        if (!count($thisDatabaseReader->select($selectCheck, $saveValues)) > 0) {
-            $thisDatabaseWriter->insert($saveInsert, $saveValues);
+        if ($save == "false") {
+            $saveInsert = 'INSERT INTO `tblUserRecipe` SET ';
+            $saveInsert .= '`fpkUsernameSaved` = ?, ';
+            $saveInsert .= '`fpkName` = ?';
+            if (!$saved) {
+                $thisDatabaseWriter->insert($saveInsert, $saveValues);
+            }
+        } else {
+            $saveDrop = 'DELETE FROM `tblUserRecipe` WHERE `fpkUsernameSaved` = ? AND `fpkName` = ?';
+            $thisDatabaseWriter->delete($saveDrop, $saveValues);
+            if (DEBUG) {
+                print $thisDatabaseWriter->displayQuery($saveDrop, $saveValues);
+            }
         }
     } else {
         header("Location: login.php", true, 303);
@@ -49,12 +64,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+if (isset($_SESSION['username'])) {
+    $saveValues[0] = $_SESSION['username'];
+    $saveValues[1] = $search;
+    $authorValues[0] = $_SESSION['username'];
+    $selectCheck = 'SELECT * FROM `tblUserRecipe` WHERE `fpkUsernameSaved` = ? AND `fpkName` = ?';
+    $authorCheck = 'SELECT * FROM `tblRecipe` WHERE `fpkUsername` = ?';
+    if (count($thisDatabaseReader->select($selectCheck, $saveValues)) > 0) {
+        $saved = true;
+    }
+    if (count($thisDatabaseReader->select($authorCheck, $authorValues)) > 0) {
+        $author = true;
+    }
+}
+
 ?>
 <main>
     <?php
     recipe($recipeMainArray, $recipeIngredients, $recipeInstructions);
+    if (!$author) {
+        if (!$saved) {
+            print '<form method="post">';
+            print '<input type="hidden" name="save" value="false">';
+            print '<button>Save Recipe</button>';
+            print '</form>';
+        } else {
+            print '<form method="post">';
+            print '<input type="hidden" name="save" value="true">';
+            print '<button>Unsave Recipe</button>';
+            print '</form>';
+        }
+    }
     ?>
-    <form method="post">
-        <button>Save Recipe</button>
-    </form>
 </main>

@@ -2,8 +2,8 @@
 include 'top.php';
 $selectCreated = 'SELECT `pmkRecipeName`, `fldPicture`, `fldRating`, `fldTime`, `fldDescription` FROM `tblRecipe` WHERE `fpkUsername` = "' . $_SESSION['username'] . '"';
 $userCreatedRecipes = $thisDatabaseReader->select($selectCreated);
-$selectSaved = 'SELECT `fldPicture`, `fldRating`, `fldTime`, `fldDescription` FROM `tblRecipe` '; 
-$selectSaved .= 'JOIN `tblUserRecipe` ON `pmkRecipeName`=`fpkRecipeName` ';
+$selectSaved = 'SELECT `pmkRecipeName`, `fldPicture`, `fldRating`, `fldTime`, `fldDescription` FROM `tblRecipe` '; 
+$selectSaved .= 'JOIN `tblUserRecipe` ON `pmkRecipeName`=`fpkName` ';
 $selectSaved .= 'WHERE `fpkUsernameSaved` = "' . $_SESSION['username'] . '"';
 $userSavedRecipes = $thisDatabaseReader->select($selectSaved);
 if (DEBUG) {
@@ -14,12 +14,13 @@ if (DEBUG) {
 }
 ?>
 <main>
-    <a href='addRecipe.php'>Add A Recipe!</a>
+    <h1>Created Recipes</h1>
     <section class='createdRecipes'>
         <?php 
         recipePreview($userCreatedRecipes);
         ?>
     </section>
+    <h1>Saved Recipes</h1>
     <section class='savedRecipes'>
         <?php
         recipePreview($userSavedRecipes);

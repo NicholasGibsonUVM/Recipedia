@@ -17,7 +17,7 @@ function recipePreview($recipeArray) {
         print ' <img src="../images/' . $recipe['fldPicture'] . '" alt="' . $recipe['pmkRecipeName'] . '">';
         print '</figure>';
         print '<h1>' . $recipe['pmkRecipeName'] . '</h1>';
-        print '<h2>' . $recipe['fldTime'] . '</h2>';
+        print '<h2>' . timeToString($recipe['fldTime']) . '</h2>';
         print '<p>' . $recipe['fldDescription'] . '</p>';
         print '</a>';
         print '</section>';
@@ -25,16 +25,18 @@ function recipePreview($recipeArray) {
 }
 
 function recipe($recipeArray, $ingredientArray, $instructionArray) {
+    print '<div class=recipeDisplay>';
     foreach ($recipeArray as $recipe) {
         print '<section class="recipeTop">';
+        print '<h1>' . $recipe['pmkRecipeName'] . '</h1>';
         print '<figure class="recipePicture">' . PHP_EOL;
         print ' <img src="../images/' . $recipe['fldPicture'] . '" alt="' . $recipe['pmkRecipeName'] . '">';
         print '</figure>';
-        print '<h1>' . $recipe['pmkRecipeName'] . '</h1>';
-        print '<h2>' . $recipe['fldTime'] . '</h2>';
         print '<p>' . $recipe['fldDescription'] . '</p>';
+        print '<h2>' . timeToString($recipe['fldTime']) . '</h2>';
         print '</section>';
     }
+    print '<h3>Ingredients</h3>';
     print '<section class="ingredients">';
     foreach ($ingredientArray as $ingredient) {
         print '<section class="recipeIngredient">';
@@ -42,6 +44,7 @@ function recipe($recipeArray, $ingredientArray, $instructionArray) {
         print '</section>';
     }
     print '</section>';
+    print '<h3>Instructions</h3>';
     print '<section class="instructions">';
     foreach ($instructionArray as $instruction) {
         print '<section class="recipeInstruction">';
@@ -49,5 +52,13 @@ function recipe($recipeArray, $ingredientArray, $instructionArray) {
         print '</section>';
     }
     print '</section>';
+    print '</div>';
+}
+
+function timeToString($time) {
+    $hours = (int) substr($time, 0, 2);
+    $minutes = (int) substr($time, 3, 2);
+    $timeString = "Time Required: " . strVal($hours) . " Hours " . strval($minutes) . " Minutes";
+    return $timeString;
 }
 ?>

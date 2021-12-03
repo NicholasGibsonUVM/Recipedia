@@ -14,11 +14,11 @@
 
     <?php
     if (isset($_SESSION['username'])) {
-        print '<a class="myRecipes ';
         if (PATH_PARTS['filename'] == "myRecipes") {
-            print 'activePage';
+            print '<a class="myRecipes" href="addRecipe.php">Add A Recipe!</a>';
+        } else {
+        print '<a class="myRecipes" href="myRecipes.php">My Recipes</a>' . PHP_EOL;
         }
-        print '" href="myRecipes.php">My Recipes</a>' . PHP_EOL;
         print '<a class="logout ';
         if (PATH_PARTS['filename'] == "logout") {
             print 'activePage';
