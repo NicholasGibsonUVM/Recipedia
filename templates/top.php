@@ -23,6 +23,7 @@
 include '../lib/constants.php';
 print '<!-- make Database connections -->' . PHP_EOL;
 require_once('../lib/Database.php');
+require_once('../lib/Recipe.php');
 require_once('../lib/Picture.php');
 require_once('../lib/functions.php');
 $thisDatabaseReader = new Database('nsgibson_reader', 'r', DATABASE_NAME);

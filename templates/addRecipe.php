@@ -216,7 +216,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <button type="button" id="1" onclick="deleteIngredient(this, 'instructionAmount')">Remove Instruction</button>
             </div>
         </div>
-        <button type="button" onclick="addIngredient('instructions', 'instructionAmount')">Add Ingredient</button>
+        <button type="button" onclick="addIngredient('instructions', 'instructionAmount')">Add Instruction</button>
         <input type="hidden" id="instructionAmount" name="instructionAmount" value="1">
         <input type="submit">
     </form>
@@ -242,7 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             var temp2 = labelArray[i].htmlFor.slice(0, -1) + (parseInt(idNumber) + 1);
             inputArray[i].name = temp;
             labelArray[i].htmlFor = temp2;
-            inputArray[i].innerText = '';
+            inputArray[i].value = '';
         }
         var increment = document.getElementById(counterName)
         increment.value = parseInt(increment.value) + 1;
