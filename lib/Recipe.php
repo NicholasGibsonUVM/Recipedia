@@ -1,44 +1,72 @@
 <?php
 class Recipe
 {
-    //Ask about making these static
-    public function __construct($recipeName)
+    public function __construct($recipeName, $main = null, $ingredients = null, $instructions = null)
     {
         $this->recipeDatabaseReader = new Database('nsgibson_reader', 'r', 'NSGIBSON_cs148_final');
         $this->recipeDatabaseWriter = new Database('nsgibson_writer', 'w', 'NSGIBSON_cs148_final');
-        $selectRecipe = 'SELECT * FROM `tblRecipe` ';
-        $selectRecipe .= 'WHERE `pmkRecipeName` = "' . $recipeName . '"';
-        $this->recipeMainArray = $this->recipeDatabaseReader->select($selectRecipe);
+        $this->recipeName = $recipeName;
 
+        if ($main == null || $ingredients == null || $instructions == null) {
+            $this->setMain();
+            $this->setIngredients();
+            $this->setInstructions();
+            $this->setSaved();
+        } else {
+            $this->recipeMainArray = $main;
+            $this->recipeIngredients = $ingredients;
+            $this->recipeInstructions = $instructions;
+        }
+    }
+
+    public function setMain()
+    {
+        $selectRecipe = 'SELECT * FROM `tblRecipe` ';
+        $selectRecipe .= 'WHERE `pmkRecipeName` = "' . $this->recipeName . '"';
+        $this->recipeMainArray = $this->recipeDatabaseReader->select($selectRecipe);
+    }
+
+    public function setIngredients()
+    {
         $selectIngredients = 'SELECT * FROM `tblIngredients` ';
         $selectIngredients .= 'JOIN `tblRecipeIngredient` ON `pmkIngredientId`=`fpkIngredientId` ';
         $selectIngredients .= 'JOIN `tblRecipe` ON `pmkRecipeName`=`fpkRecipeName` ';
-        $selectIngredients .= 'WHERE `pmkRecipeName` = "' . $recipeName . '"';
+        $selectIngredients .= 'WHERE `pmkRecipeName` = "' . $this->recipeName . '"';
         $this->recipeIngredients = $this->recipeDatabaseReader->select($selectIngredients);
+    }
 
+    public function setInstructions()
+    {
         $selectInstructions = 'SELECT * FROM `tblInstruction` ';
         $selectInstructions .= 'JOIN `tblRecipeInstruction` ON `pmkInstructionId`=`fpkInstructionId` ';
         $selectInstructions .= 'JOIN `tblRecipe` ON `pmkRecipeName`=`fpkRecipeName` ';
-        $selectInstructions .= 'WHERE `pmkRecipeName` = "' . $recipeName . '"';
+        $selectInstructions .= 'WHERE `pmkRecipeName` = "' . $this->recipeName . '"';
         $this->recipeInstructions = $this->recipeDatabaseReader->select($selectInstructions);
+    }
 
-        $selectSaved = 'SELECT * FROM `tblUserRecipe` WHERE `fpkRecipeName` = "' . $recipeName . '"';
+    public function setSaved()
+    {
+        $selectSaved = 'SELECT * FROM `tblUserRecipe` WHERE `fpkRecipeName` = "' . $this->recipeName . '"';
         $this->usersSaved = $this->recipeDatabaseReader->select($selectSaved);
     }
 
-    public function getMain() {
+    public function getMain()
+    {
         return $this->recipeMainArray;
     }
 
-    public function getIngredients() {
+    public function getIngredients()
+    {
         return $this->recipeIngredients;
     }
 
-    public function getInstructions() {
+    public function getInstructions()
+    {
         return $this->recipeInstructions;
     }
 
-    public function deleteRecipe() {
+    public function deleteRecipe()
+    {
         foreach ($this->recipeIngredients as $ingredient) {
             $values[0] = $ingredient['pmkIngredientId'];
             $deleteIngredient = 'DELETE FROM `tblIngredients` WHERE `pmkIngredientId`=?';

@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $recipeValues[4] = $description;
         $recipeValues[5] = $author;
 
-       $thisDatabaseWriter->transactionStart();
+        $thisDatabaseWriter->transactionStart();
 
         if (move_uploaded_file($_FILES["txtRecipeImage"]["tmp_name"], $target_file)) {
             if ($thisDatabaseWriter->insert($recipeInsert, $recipeValues)) {
@@ -145,8 +145,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($dataSubmited) {
             $thisDatabaseWriter->transactionComplete();
             if (!DEBUG) {
-            header("Location: recipeAdded.php", true, 303);
-            exit();
+                header("Location: recipeAdded.php", true, 303);
+                exit();
             } else {
                 print '<p>Data Submitted</p>';
             }
