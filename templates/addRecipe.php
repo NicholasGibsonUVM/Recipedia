@@ -8,7 +8,7 @@ $time = '';
 $image = '';
 $ingredientNameArray = array();
 $ingredientAmountArray = array();
-$igredientUnitArray = array();
+$ingredientUnitArray = array();
 $instructionDescriptionArray = array();
 $ingredientAmount = 0;
 $instructionAmount = 0;
@@ -156,6 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+print_r($_POST);
 ?>
 <main class='form'>
     <h1>Add A Recipe!</h1>
@@ -187,23 +188,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div id='ingredient'>
                 <fieldset class='recipeIngredientName'>
                     <label for='txtRecipeIngredientName1'>Ingredient Name</label>
-                    <input type='text' name='txtRecipeIngredientName1' id='1' class='recipeIngredientName'>
+                    <input type='text' name='txtRecipeIngredientName1' id='1' class='recipeIngredientName' value="<?php if (count($ingredientNameArray) > 0) {
+                                                                                                                        print $ingredientNameArray[0];
+                                                                                                                    } ?>">
                 </fieldset>
                 <div class='ingredientUnit'>
                     <fieldset class='recipeIngredientAmount'>
                         <label for='txtRecipeIngredientAmount1'>Amount</label>
-                        <input type='text' name='txtRecipeIngredientAmount1' id='1' class='recipeIngredientAmount'>
+                        <input type='text' name='txtRecipeIngredientAmount1' id='1' class='recipeIngredientAmount' value="<?php if (count($ingredientAmountArray) > 0) {
+                                                                                                                                print $ingredientAmountArray[0];
+                                                                                                                            } ?>">
                     </fieldset>
                     <fieldset class='recipeIngredientUnit'>
                         <label for='txtRecipeIngredientUnit1'>Unit</label>
-                        <input type='text' name='txtRecipeIngredientUnit1' id='1' class='recipeIngredientUnit'>
+                        <input type='text' name='txtRecipeIngredientUnit1' id='1' class='recipeIngredientUnit' value=" <?php if (count($ingredientUnitArray) > 0) {
+                                                                                                                            print $ingredientUnitArray[0];
+                                                                                                                        } ?>">
                     </fieldset>
                 </div>
                 <button type="button" id="1" onclick="deleteIngredient(this, 'ingredientAmount')">Remove Ingredient</button>
             </div>
+
+            <?php
+            for ($i = 1; $i < $ingredientAmount; $i++) {
+                $count = $i + 1;
+                print '<div id="ingredient">
+                <fieldset class="recipeIngredientName">
+                    <label for="txtRecipeIngredientName' . $count . '">Ingredient Name</label>
+                    <input type="text" name="txtRecipeIngredientName' . $count . '" id="' . $count . '" class="recipeIngredientName" value="' . $ingredientNameArray[$i] . '">
+                </fieldset>
+                <div class="ingredientUnit">
+                    <fieldset class="recipeIngredientAmount">
+                        <label for="txtRecipeIngredientAmount' . $count . '">Amount</label>
+                        <input type="text" name="txtRecipeIngredientAmount' . $count . '" id="' . $count . '" class="recipeIngredientAmount" value="' . $ingredientAmountArray[$i] . '">
+                    </fieldset>
+                    <fieldset class="recipeIngredientUnit">
+                        <label for="txtRecipeIngredientUnit' . $count . '">Unit</label>
+                        <input type="text" name="txtRecipeIngredientUnit' . $count . '" id="' . $count . '" class="recipeIngredientUnit" value="' . $ingredientUnitArray[$i] . '">
+                    </fieldset>
+                </div>
+                <button type="button" id="' . $count . '" onclick="deleteIngredient(this, \'ingredientAmount\')">Remove Ingredient</button>
+            </div>';
+            }
+            ?>
         </div>
+
         <button type="button" onclick="addIngredient('ingredients', 'ingredientAmount')">Add Ingredient</button>
-        <input type="hidden" id="ingredientAmount" name="ingredientAmount" value="1">
+        <input type="hidden" id="ingredientAmount" name="ingredientAmount" value="<?php if (count($ingredientNameArray) > 0) {
+                                                                                        print count($ingredientNameArray);
+                                                                                    } else {
+                                                                                        print 1;
+                                                                                    } ?>">
 
         <h2>How Do You Make Your Recipe</h2>
         <!-- Instructions Section -->
@@ -211,13 +246,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div id='instruction'>
                 <fieldset class='recipeInstruction'>
                     <label for='txtRecipeInstruction1'>Step 1</label>
-                    <input type='text' name='txtRecipeInstruction1' id='1' class='recipeInstruction'>
+                    <input type='text' name='txtRecipeInstruction1' id='1' class='recipeInstruction' value="<?php if (count($instructionDescriptionArray) > 0) {
+                                                                                                                print $instructionDescriptionArray[0];
+                                                                                                            } ?>">
                 </fieldset>
                 <button type="button" id="1" onclick="deleteIngredient(this, 'instructionAmount')">Remove Instruction</button>
             </div>
+            <?php
+            for ($i = 1; $i < $instructionAmount; $i++) {
+                $count = $i + 1;
+                print '<div id="instruction">
+                <fieldset class="recipeInstruction">
+                    <label for="txtRecipeInstruction' . $count . '">Step ' . $count . '</label>
+                    <input type="text" name="txtRecipeInstruction' . $count . '" id="' . $count . '" class="recipeInstruction" value="' . $instructionDescriptionArray[$i] . '">
+                </fieldset>
+                <button type="button" id="' . $count . '" onclick="deleteIngredient(this, \'instructionAmount\')">Remove Instruction</button>
+            </div>';
+            }
+            ?>
         </div>
         <button type="button" onclick="addIngredient('instructions', 'instructionAmount')">Add Instruction</button>
-        <input type="hidden" id="instructionAmount" name="instructionAmount" value="1">
+        <input type="hidden" id="instructionAmount" name="instructionAmount" value="<?php if (count($instructionDescriptionArray) > 0) {
+                                                                                        print count($instructionDescriptionArray);
+                                                                                    } else {
+                                                                                        print 1;
+                                                                                    } ?>">
         <input type="submit">
     </form>
 </main>
