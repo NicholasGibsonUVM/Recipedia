@@ -156,7 +156,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-print_r($_POST);
 ?>
 <main class='form'>
     <h1>Add A Recipe!</h1>

@@ -67,29 +67,53 @@ class Recipe
 
     public function deleteRecipe()
     {
+        $this->recipeDatabaseWriter->transactionStart();
+        $fail = false;
         foreach ($this->recipeIngredients as $ingredient) {
             $values[0] = $ingredient['pmkIngredientId'];
             $deleteIngredient = 'DELETE FROM `tblIngredients` WHERE `pmkIngredientId`=?';
             $deleteReference = 'DELETE FROM `tblRecipeIngredient` WHERE `fpkIngredientId`=?';
-            $this->recipeDatabaseWriter->delete($deleteIngredient, $values);
-            $this->recipeDatabaseWriter->delete($deleteReference, $values);
+            if (!$this->recipeDatabaseWriter->delete($deleteIngredient, $values) || !$this->recipeDatabaseWriter->delete($deleteReference, $values)) {
+                $this->recipeDatabaseWriter->transactionFailed();
+                $fail = true;
+            }
         }
         foreach ($this->recipeInstructions as $instruction) {
             $values[0] = $instruction['pmkInstructionId'];
             $deleteInstruction = 'DELETE FROM `tblInstruction` WHERE `pmkInstructionId`=?';
             $deleteReference = 'DELETE FROM `tblRecipeInstruction` WHERE `fpkInstructionId`=?';
-            $this->recipeDatabaseWriter->delete($deleteInstruction, $values);
-            $this->recipeDatabaseWriter->delete($deleteReference, $values);
+            if (!$this->recipeDatabaseWriter->delete($deleteInstruction, $values) || !$this->recipeDatabaseWriter->delete($deleteReference, $values)) {
+                $this->recipeDatabaseWriter->transactionFailed();
+                $fail = true;
+            }
         }
         foreach ($this->usersSaved as $save) {
             $values[0] = $save['fpkUsernameSaved'];
             $deleteSave = 'DELETE FROM `tblUserRecipe` WHERE `fpkUsernameSaved`=?';
-            $this->recipeDatabaseWriter->delete($deleteSave, $values);
+            if (!$this->recipeDatabaseWriter->delete($deleteSave, $values)) {
+                $this->recipeDatabaseWriter->transactionFailed();
+                $fail = true;
+            }
         }
         foreach ($this->recipeMainArray as $recipe) {
             $values[0] = $recipe['pmkRecipeName'];
             $deleteRecipe = 'DELETE FROM `tblRecipe` WHERE `pmkRecipeName`=?';
-            $this->recipeDatabaseWriter->delete($deleteRecipe, $values);
+            if (!$this->recipeDatabaseWriter->delete($deleteRecipe, $values)) {
+                $this->recipeDatabaseWriter->transactionFailed();
+                $fail = true;
+            }
+        }
+        if (!$fail) {
+            $this->recipeDatabaseWriter->transactionComplete();
+        }
+    }
+
+    public function editRecipe($main, $ingredients, $instructions)
+    {
+        $this->recipeDatabaseWriter->transactionStart();
+        $fail = false;
+        foreach ($ingredients as $ingredient) {
+            $ingredientInsert = 'UPDATE `tblIngredients` SET `fldName` = ?, `fldUnit` = ? WHERE `pmkIngredientId`=?';
         }
     }
 }

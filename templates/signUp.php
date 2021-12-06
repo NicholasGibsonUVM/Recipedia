@@ -59,7 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sqlInsert = 'INSERT INTO `tblUser`(`pmkUsername`, `fldEmail`, `fldPassword`) VALUES (?,?,?)';
         $values = array($txtUsername, $txtEmail, $txtPassword);
         if ($thisDatabaseWriter->insert($sqlInsert, $values)) {
-            header("Location: https://nsgibson.w3.uvm.edu/cs148/Recipedia/templates/index.php", true, 303);
+            $userInfoSelect = 'SELECT `fldTimeJoined` FROM `tblUser` WHERE `pmkUsername`=?';
+            $userInfo = $thisDatabaseReader->select($userInfoSelect, array($txtUsername));
+            $key1 = password_hash($userInfo[0]['fldTimeJoined'], PASSWORD_DEFAULT);
+            $mail = mail($txtEmail, "Recipedia Confirmation", "https:" . BASE_PATH . "confirm.php?h=" . $key1 . "&u=" . $txtUsername);
+            header("Location: https://nsgibson.w3.uvm.edu/cs148/Recipedia/templates/confirm.php", true, 303);
             die();
         } else {
             print '<p>Something went wrong</p>';
