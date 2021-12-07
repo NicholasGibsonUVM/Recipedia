@@ -109,3 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </fieldset>
     </form>
 </main>
+<?php 
+include 'footer.php';
+?>

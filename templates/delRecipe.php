@@ -34,3 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button name='delete' value='false'>No</button>
     </form> 
 </main>
+<?php 
+include 'footer.php';
+?>

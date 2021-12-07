@@ -4,15 +4,15 @@ include 'top.php';
 $updateName = (isset($_GET['rec'])) ? htmlspecialchars($_GET['rec']) : '';
 
 if (strlen($updateName) == 0) {
-$author = $_SESSION['username'];
-$recipeName = '';
-$recipeDescription = '';
-$time = '';
-$image = '';
-$ingredient = array();
-$instruction = array();
-$ingredientAmount = 0;
-$instructionAmount = 0;
+    $author = $_SESSION['username'];
+    $recipeName = '';
+    $recipeDescription = '';
+    $time = '';
+    $image = '';
+    $ingredient = array();
+    $instruction = array();
+    $ingredientAmount = 0;
+    $instructionAmount = 0;
 } else {
     $updateRecipe = new Recipe($updateName);
     $main = $updateRecipe->getMain();
@@ -32,7 +32,7 @@ if (DEBUG) {
     print '</p>';
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dataIsGood = true;
     $recipeName = getData('txtRecipeName');
     $recipeDescription = getData('txtRecipeDescription');
@@ -97,21 +97,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             print '</p>';
         }
         if (strlen($updateName) == 0) {
-        $recipe = new Recipe($recipeName);
-        if (move_uploaded_file($_FILES["txtRecipeImage"]["tmp_name"], $target_file)) {
-            if ($recipe->insertRecipe($main, $ingredient, $instruction)) {
-                print '<h1>Submitted</h1>';
+            $recipe = new Recipe($recipeName);
+            if (move_uploaded_file($_FILES["txtRecipeImage"]["tmp_name"], $target_file)) {
+                if ($recipe->insertRecipe($main, $ingredient, $instruction)) {
+                    if (DEBUG) {
+                        print '<h1>Submitted</h1>';
+                    } else {
+                        header("Location: displayRecipe.php?name" . $recipeName, true);
+                        exit();
+                    }
+                } else {
+                    print '<h1>Failed</h1>';
+                }
+            }
+        } else {
+            if ($updateRecipe->editRecipe($main, $ingredient, $instruction)) {
+                if (DEBUG) {
+                    print '<h1>Updated</h1>';
+                } else {
+                    header("Location: displayRecipe.php?name" . $recipeName, true);
+                    exit();
+                }
             } else {
                 print '<h1>Failed</h1>';
             }
         }
-    } else {
-        if ($updateRecipe->editRecipe($main, $ingredient, $instruction)) {
-            print '<h1>Updated</h1>';
-        } else {
-            print '<h1>Failed</h1>';
-        }
-    }
     }
 }
 
@@ -232,6 +242,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="submit">
     </form>
 </main>
+<?php 
+include 'footer.php';
+?>
 <script>
     function addIngredient(parentName, counterName) {
         var parent = document.getElementById(parentName);

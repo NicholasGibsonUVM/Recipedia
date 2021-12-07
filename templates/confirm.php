@@ -25,3 +25,6 @@ if (count($userInfo) > 0) {
     }
     ?>
 </main>
+<?php 
+include 'footer.php';
+?>

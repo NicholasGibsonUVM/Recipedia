@@ -14,7 +14,7 @@ body {
       "main"
       "footer";
     border: none;
-    grid-template-rows: 10% 5% 70% 15%;
+    grid-template-rows: 10% 5% auto 5%;
     line-height: 1.4em;
     font-family: 'Outfit', sans-serif;
     font-weight: lighter;
@@ -22,4 +22,16 @@ body {
     padding: 0%;
     margin: auto;
     background-color: #f6eddf;
+    position: relative;
   }
+
+main {
+  grid-area: main;
+}
+
+footer {
+  grid-area: footer;
+  width: 60%;
+  text-align: center;
+  margin: auto;
+}

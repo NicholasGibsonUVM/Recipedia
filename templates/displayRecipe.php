@@ -77,7 +77,6 @@ if (DEBUG) {
 ?>
 <main>
     <?php
-    recipe($recipeMainArray, $recipeIngredients, $recipeInstructions);
     if (!$author) {
         if (!$saved) {
             print '<form method="post">';
@@ -96,5 +95,9 @@ if (DEBUG) {
         print '<input type="submit" name="change" value="Delete">';
         print '</form>';
     }
+    recipe($recipeMainArray, $recipeIngredients, $recipeInstructions);
     ?>
 </main>
+<?php 
+include 'footer.php';
+?>

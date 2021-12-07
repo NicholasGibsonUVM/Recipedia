@@ -127,7 +127,8 @@ class Recipe
     }
 
     //Insert/Update Functions
-    public function insertMain($main) {
+    public function insertMain($main)
+    {
         $recipeInsert = 'INSERT INTO `tblRecipe` SET ';
         $recipeInsert .= '`pmkRecipeName` = ?, ';
         $recipeInsert .= '`fldPicture` = ?, ';
@@ -141,7 +142,7 @@ class Recipe
         $recipeValues[3] = $main['time'];
         $recipeValues[4] = $main['description'];
         $recipeValues[5] = $main['author'];
-        if (!$this->recipeDatabaseWriter->insert($recipeInsert,$recipeValues)) {
+        if (!$this->recipeDatabaseWriter->insert($recipeInsert, $recipeValues)) {
             if (DEBUG) {
                 print $this->recipeDatabaseWrite->displayQuery($recipeInsert, $recipeValues);
             }
@@ -250,7 +251,8 @@ class Recipe
         return true;
     }
 
-    public function updateInstruction($instruction, $order, $instructionId) {
+    public function updateInstruction($instruction, $order, $instructionId)
+    {
         $instructionUpdate = 'UPDATE `tblInstruction` SET `fldInstructionDescription` = ? WHERE `pmkInstructionId`=?';
         $instructionValues[0] = $instruction['fldInstructionDescription'];
         $instructionValues[1] = $instructionId;
@@ -316,7 +318,7 @@ class Recipe
         $counter = 0;
         foreach ($instructions as $instruction) {
             if ($counter < count($this->recipeInstructions)) {
-                if(!$this->updateInstruction($instruction, $counter + 1, $this->recipeInstructions[$counter]['pmkInstructionId'])) {
+                if (!$this->updateInstruction($instruction, $counter + 1, $this->recipeInstructions[$counter]['pmkInstructionId'])) {
                     $fail = true;
                 }
                 if (DEBUG) {
@@ -351,7 +353,8 @@ class Recipe
         }
     }
 
-    public function insertRecipe($main, $ingredients, $instructions) {
+    public function insertRecipe($main, $ingredients, $instructions)
+    {
         $this->recipeDatabaseWriter->transactionStart();
         $fail = false;
         //Main
