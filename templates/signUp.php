@@ -62,7 +62,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $userInfoSelect = 'SELECT `fldTimeJoined` FROM `tblUser` WHERE `pmkUsername`=?';
             $userInfo = $thisDatabaseReader->select($userInfoSelect, array($txtUsername));
             $key1 = password_hash($userInfo[0]['fldTimeJoined'], PASSWORD_DEFAULT);
-            $mail = mail($txtEmail, "Recipedia Confirmation", "https:" . BASE_PATH . "confirm.php?h=" . $key1 . "&u=" . $txtUsername);
+            $headers = "From: Recipedia\r\n";
+            $headers .= "Reply-To: nsgibson@uvm.edu\r\n";
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-Type: text/html";
+            $message = "<h1>Thank You For Signing Up For Recipedia</h1>";
+            $message .= "<h2><a href=\"https:" . BASE_PATH . "confirm.php?h=" . $key1 . "&u=" . $txtUsername . "\"Click Here To Confirm</a></h2>";
+            $message .= "<p>If the link above doesn't work please copy and paste the link below into your browser</p>";
+            $message .= "<p>https:" . BASE_PATH . "confirm.php?h=" . $key1 . "&u=" . $txtUsername . "</p>";
+            $mail = mail($txtEmail, "Recipedia Confirmation", $message, $headers);
             header("Location: https://nsgibson.w3.uvm.edu/cs148/Recipedia/templates/confirm.php", true, 303);
             die();
         } else {

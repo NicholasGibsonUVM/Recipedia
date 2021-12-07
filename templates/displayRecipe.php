@@ -6,21 +6,6 @@ $recipeMainArray = $recipe->getMain();
 $recipeIngredients = $recipe->getIngredients();
 $recipeInstructions = $recipe->getInstructions();
 
-if (DEBUG) {
-    print '<p>';
-    print_r($recipeMainArray);
-    print '</p>';
-    print '<p>';
-    print_r($recipeIngredients);
-    print '</p>';
-    print '<p>';
-    print_r($recipeInstructions);
-    print '</p>';
-    print $thisDatabaseReader->displayQuery($selectRecipe);
-    print $thisDatabaseReader->displayQuery($selectIngredients);
-    print $thisDatabaseReader->displayQuery($selectInstructions);
-}
-
 $saved = false;
 $author = false;
 $save = false;
@@ -52,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 print $thisDatabaseWriter->displayQuery($saveDrop, $saveValues);
             }
         } else if ($change == "Edit") {
-            header("Location: editRecipe.php?rec=" . $search, true, 303);
+            header("Location: addRecipe.php?rec=" . $search, true, 303);
             exit();
         } else if ($change == "Delete") {
             header("Location: delRecipe.php?rec=" . $search, true, 303);
@@ -75,6 +60,18 @@ if (isset($_SESSION['username'])) {
     if (count($thisDatabaseReader->select($authorCheck, $saveValues)) > 0) {
         $author = true;
     }
+}
+
+if (DEBUG) {
+    print '<p>';
+    print_r($recipeMainArray);
+    print '</p>';
+    print '<p>';
+    print_r($recipeIngredients);
+    print '</p>';
+    print '<p>';
+    print_r($recipeInstructions);
+    print '</p>';
 }
 
 ?>

@@ -19,8 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($delete) {
         $recipe->deleteRecipe();
+        header("Location: myRecipes.php", true, 303);
+        exit();
     } else {
         header("Location: displayRecipe.php?name=" . $recName, true, 303);
+        exit();
     }
 }
 ?>
