@@ -100,11 +100,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </fieldset>
         <fieldset class='password'>
             <label for='txtPassword'>Password</label>
-            <input type='text' name='txtPassword' id='txtPassword' class='password' placeholder="Password">
+            <input type='password' name='txtPassword' id='txtPassword' class='password' placeholder="Password">
         </fieldset>
         <fieldset class='confirmPassword'>
             <label for='txtConfirmPassword'>Confirm Password</label>
-            <input type='text' name='txtConfirmPassword' id='txtConfirmPassword' class='confirmPassword' placeholder="Confirm Password">
+            <input type='password' name='txtConfirmPassword' id='txtConfirmPassword' class='confirmPassword' placeholder="Confirm Password">
         </fieldset>
         <fieldset class='submit'>
             <button type='submit' name='submit' id='submit' value='submit'>Submit</button>

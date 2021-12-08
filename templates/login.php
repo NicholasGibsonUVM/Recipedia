@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </fieldset>
         <fieldset class='password'>
             <label for='txtPassword'>Password</label>
-            <input type='text' name='txtPassword' id='txtPassword' class='password' placeholder="Password">
+            <input type='password' name='txtPassword' id='txtPassword' class='password' placeholder="Password">
         </fieldset>
         <fieldset class='submit'>
             <button type='submit' name='submit' id='submit' value='submit'>Submit</button>

@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if (DEBUG) {
                         print '<h1>Submitted</h1>';
                     } else {
-                        header("Location: displayRecipe.php?name" . $recipeName, true);
+                        header("Location: displayRecipe.php?name=" . $recipeName, true);
                         exit();
                     }
                 } else {
