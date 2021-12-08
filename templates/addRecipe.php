@@ -97,6 +97,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             print_r($_FILES);
             print '</p>';
         }
+        $nameCheck = 'SELECT `pmkRecipeName` FROM `tblRecipe` WHERE `pmkRecipeName` = ?';
+        if (count($thisDatabaseReader->select($nameCheck, array($txtRecipeName))) > 0 && strlen($updateName) == 0) {
+            print '<p>That name already exists</p>';
+            $dataIsGood = false;
+        }
     }
 
     if ($dataIsGood) {

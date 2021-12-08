@@ -39,6 +39,8 @@ main {
 
 .featuredRecipe {
   display: flex;
+  margin: auto;
+  width: 70%;
 }
 
 footer {

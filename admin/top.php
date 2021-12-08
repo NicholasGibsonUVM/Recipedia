@@ -40,7 +40,8 @@ foreach ($admins as $admin) {
       }
 }
 if ($isAdmin == false) {
-      die();
+      header("Location: ../templates/index.php", true, 303);
+      exit();
 }
 
 print '<body class="' . PATH_PARTS['filename'] . '">' . PHP_EOL;

@@ -1,5 +1,8 @@
 <?php 
 include 'top.php';
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php", true, 303);
+}
 $selectCreated = 'SELECT `pmkRecipeName`, `fldPicture`, `fldRating`, `fldTime`, `fldDescription` FROM `tblRecipe` WHERE `fpkUsername` = "' . $_SESSION['username'] . '"';
 $userCreatedRecipes = $thisDatabaseReader->select($selectCreated);
 $selectSaved = 'SELECT `pmkRecipeName`, `fldPicture`, `fldRating`, `fldTime`, `fldDescription` FROM `tblRecipe` '; 
