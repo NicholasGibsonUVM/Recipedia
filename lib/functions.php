@@ -35,6 +35,7 @@ function recipePreviewAdmin($recipeArray, $user) {
         print '<h2>' . timeToString($recipe[0]['fldTime']) . '</h2>';
         print '<p>' . $recipe[0]['fldDescription'] . '</p>';
         print '</a>';
+        print '<a href="deleteRecipe.php?rec=' . $recipe[0]['pmkRecipeName'] . '&usr=' . $user .'">Delete Recipe</a>';
         print '</section>';
     }
 }
