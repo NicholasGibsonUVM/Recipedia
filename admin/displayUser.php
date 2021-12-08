@@ -17,7 +17,7 @@ foreach ($recipes as $recipe) {
     <h1><?php print $user; ?>'s Recipes</h1>
     <section class=returnedRecipes>
         <?php 
-        recipePreviewAdmin($recipeArray);
+        recipePreviewAdmin($recipeArray, $user);
         ?>
     </section>
 

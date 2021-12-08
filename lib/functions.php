@@ -24,10 +24,10 @@ function recipePreview($recipeArray) {
     }
 }
 
-function recipePreviewAdmin($recipeArray) {
+function recipePreviewAdmin($recipeArray, $user) {
     foreach ($recipeArray as $recipe) {
         print '<section class="recipePreview">';
-        print '<a href="updateRecipe.php?name=' . $recipe[0]['pmkRecipeName'] . '">';
+        print '<a href="updateRecipe.php?rec=' . $recipe[0]['pmkRecipeName'] . '&usr=' . $user .'">';
         print '<figure class="recipePicture">' . PHP_EOL;
         print ' <img src="../images/' . $recipe[0]['fldPicture'] . '" alt="' . $recipe[0]['pmkRecipeName'] . '">';
         print '</figure>';

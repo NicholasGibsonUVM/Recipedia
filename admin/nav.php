@@ -4,4 +4,5 @@
                         print 'activePage';
                     }
                     ?>" href="users.php">Users</a>
+    <a class="login" href="../templates/index.php">Exit</a>
 </nav>
