@@ -46,3 +46,18 @@ fieldset {
 div fieldset {
     padding: 0%;
 }
+
+@media only screen and (max-width: 600px) {
+    .form {
+        width: 95%;
+        border-radius: none;
+        background-color: initial;
+        box-shadow: none;
+    }
+    .form .recipeImage {
+        background-color: initial;
+    }
+    .form textarea, .form input {
+        width: 98%;
+    }
+  }

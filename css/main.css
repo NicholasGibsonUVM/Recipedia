@@ -1,5 +1,6 @@
 html {
   height: 100%;
+  width: 100%;
   display: flex;
 }
 
@@ -8,6 +9,7 @@ body {
     margin: 0;
     display: grid;
     height: 100%;
+    width: 100%;
     grid-template-areas:
       "header"
       "nav"
@@ -48,4 +50,16 @@ footer {
   width: 60%;
   text-align: center;
   margin: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  html {
+    overflow-x: hidden;
+  }
+  body {
+    overflow-x: hidden;
+    grid-template-columns: 100%;
+    grid-template-rows: 10% 10% auto 5%;
+  }
+  
 }

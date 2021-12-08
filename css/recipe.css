@@ -18,3 +18,14 @@
     margin: auto;
     text-align: center;
 }
+
+@media only screen and (max-width: 600px) {
+    .recipeDisplay {
+        width: 90%;
+        box-shadow: none;
+    }
+
+    .recipeDisplay section.recipeTop {
+        width: 100%;
+    }
+  }
