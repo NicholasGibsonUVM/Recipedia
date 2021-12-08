@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (DEBUG) {
         print $thisDatabaseReader->displayQuery($sqlUsername, $valueUsername);
     }
-    if (empty($credentials) || $txtPassword != $credentials[0]['fldPassword']) {
+    if (empty($credentials) || !(password_verify($txtPassword, $credentials[0]['fldPassword']))) {
         $dataIsGood = false;
         print '<p>Credential are Incorrect</p>';
     }
@@ -39,7 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die();
     }
 }
+
 ?>
+
 <main>
     <link rel="stylesheet" href="../css/signup.css?version=<?php print time(); ?>" type="text/css">
     <h1>Login</h1>

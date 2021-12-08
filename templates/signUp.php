@@ -16,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $txtUsername = getData('txtUsername');
     $txtPassword = getData('txtPassword');
     $txtConfirmPassword = getData('txtConfirmPassword');
+    $Password = password_hash($txtPassword, PASSWORD_DEFAULT);
+    $ConfirmPassword = password_hash($txtConfirmPassword, PASSWORD_DEFAULT);
 
     $sqlUsername = 'SELECT `pmkUsername` FROM `tblUser` WHERE `pmkUsername` = ?';
     $valueUsername = array($txtUsername);
@@ -57,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($dataIsGood) {
         $sqlInsert = 'INSERT INTO `tblUser`(`pmkUsername`, `fldEmail`, `fldPassword`) VALUES (?,?,?)';
-        $values = array($txtUsername, $txtEmail, $txtPassword);
+        $values = array($txtUsername, $txtEmail, $Password);
         if ($thisDatabaseWriter->insert($sqlInsert, $values)) {
             $userInfoSelect = 'SELECT `fldTimeJoined` FROM `tblUser` WHERE `pmkUsername`=?';
             $userInfo = $thisDatabaseReader->select($userInfoSelect, array($txtUsername));
