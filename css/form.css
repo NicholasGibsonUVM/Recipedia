@@ -35,6 +35,10 @@ fieldset {
     background-color: rgb(250, 250, 250);
 }
 
+.form input.confirmed {
+    width: initial;
+}
+
 .form .recipeImage {
     background-color: #796465;
 }
