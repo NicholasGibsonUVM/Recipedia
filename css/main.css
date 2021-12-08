@@ -29,6 +29,18 @@ main {
   grid-area: main;
 }
 
+.introduction {
+  text-align: center;
+}
+
+.featuredHeader {
+  text-align: center;
+}
+
+.featuredRecipe {
+  display: flex;
+}
+
 footer {
   grid-area: footer;
   width: 60%;

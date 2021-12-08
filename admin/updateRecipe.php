@@ -8,6 +8,7 @@ $author = $main[0]['fpkUsername'];
 $recipeName = $main[0]['pmkRecipeName'];
 $recipeDescription = $main[0]['fldDescription'];
 $time = $main[0]['fldTime'];
+$pictureLoc = $main[0]['fldPicture'];
 $ingredient = $updateRecipe->getIngredients();
 $instruction = $updateRecipe->getInstructions();
 $ingredientAmount = count($ingredient);
@@ -53,10 +54,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $dataIsGood = false;
             }
         }
-        $target_dir = "../images/";
-        $target_file = $target_dir . basename($_FILES["txtRecipeImage"]["name"]);
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        $pictureLoc = basename($_FILES["txtRecipeImage"]["name"]);
+        if ($_FILES["txtRecipeImage"]['size'] != 0) {
+            $target_dir = "../images/";
+            $target_file = $target_dir . basename($_FILES["txtRecipeImage"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            $pictureLoc = basename($_FILES["txtRecipeImage"]["name"]);
+        } else if (strlen($updateName) != 0) {
+            $pictureLoc = $pictureLoc;
+        } else {
+            $dataIsGood = false;
+            print '<p>Must upload an image</p>';
+        }
         if (DEBUG) {
             print '<p>';
             print_r($_FILES);
