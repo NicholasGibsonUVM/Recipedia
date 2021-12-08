@@ -73,13 +73,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $dataIsGood = false;
             }
         }
-        if ($_FILES["txtRecipeImage"]['size'] != 0) {
-        $target_dir = "../images/";
-        $target_file = $target_dir . basename($_FILES["txtRecipeImage"]["name"]);
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        $pictureLoc = basename($_FILES["txtRecipeImage"]["name"]);
-        } else if (strlen($updateName) != 0) {
+        if ($_FILES["txtRecipeImage"]['size'] != 0 && $_FILES["txtRecipeImage"]['size'] < 41943040) {
+            $target_dir = "../images/";
+            $target_file = $target_dir . basename($_FILES["txtRecipeImage"]["name"]);
+            $counter = 1;
+            while (file_exists($target_file)) {
+                $target_file = $target_dir . $counter . basename($_FILES["txtRecipeImage"]["name"]);
+                $counter++;
+            }
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            $pictureLoc = basename($_FILES["txtRecipeImage"]["name"]);
+        } else if (strlen($updateName) != 0  && $_FILES["txtRecipeImage"]['size'] < 41943040) {
             $pictureLoc = $pictureLoc;
+        } else if ($_FILES["txtRecipeImage"]['size'] >= 41943040){
+            $dataIsGood = false;
+            print '<p>Must upload a smaller image</p>';
         } else {
             $dataIsGood = false;
             print '<p>Must upload an image</p>';
@@ -250,7 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="submit">
     </form>
 </main>
-<?php 
+<?php
 include 'footer.php';
 ?>
 <script>
