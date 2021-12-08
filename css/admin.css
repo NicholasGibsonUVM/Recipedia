@@ -1,0 +1,27 @@
+section.users {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: space-evenly;
+}
+
+section.user {
+    flex-basis: auto;
+}
+
+section.user h1 {
+    font-size: 1.5em;
+}
+
+section.user h2 {
+    font-size: 1.2em;
+}
+
+section.user a {
+    color: #211c1ca1;
+    text-decoration: none;
+}
+
+section.user a:hover {
+    text-decoration: underline;
+}

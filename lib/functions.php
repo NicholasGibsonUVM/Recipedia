@@ -24,6 +24,21 @@ function recipePreview($recipeArray) {
     }
 }
 
+function recipePreviewAdmin($recipeArray) {
+    foreach ($recipeArray as $recipe) {
+        print '<section class="recipePreview">';
+        print '<a href="updateRecipe.php?name=' . $recipe[0]['pmkRecipeName'] . '">';
+        print '<figure class="recipePicture">' . PHP_EOL;
+        print ' <img src="../images/' . $recipe[0]['fldPicture'] . '" alt="' . $recipe[0]['pmkRecipeName'] . '">';
+        print '</figure>';
+        print '<h1>' . $recipe[0]['pmkRecipeName'] . '</h1>';
+        print '<h2>' . timeToString($recipe[0]['fldTime']) . '</h2>';
+        print '<p>' . $recipe[0]['fldDescription'] . '</p>';
+        print '</a>';
+        print '</section>';
+    }
+}
+
 function recipe($recipeArray, $ingredientArray, $instructionArray) {
     print '<div class=recipeDisplay>';
     foreach ($recipeArray as $recipe) {
