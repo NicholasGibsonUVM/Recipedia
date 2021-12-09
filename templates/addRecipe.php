@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             print '</p>';
         }
         $nameCheck = 'SELECT `pmkRecipeName` FROM `tblRecipe` WHERE `pmkRecipeName` = ?';
-        if (count($thisDatabaseReader->select($nameCheck, array($txtRecipeName))) > 0 && strlen($updateName) == 0) {
+        if (isset($txtRecipeName) && count($thisDatabaseReader->select($nameCheck, array($txtRecipeName))) > 0 && strlen($updateName) == 0) {
             print '<p>That name already exists</p>';
             $dataIsGood = false;
         }
@@ -195,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                                                                         } ?>">
                     </fieldset>
                 </div>
-                <button type="button" id="1" onclick="deleteIngredient(this, 'ingredientAmount')">Remove Ingredient</button>
+                <button class="delete" type="button" id="1" onclick="deleteIngredient(this, 'ingredientAmount')">Remove Ingredient</button>
             </div>
 
             <?php
@@ -216,20 +216,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="text" name="txtRecipeIngredientUnit' . $count . '" id="' . $count . '" class="recipeIngredientUnit" value="' . $ingredient[$i]['fldUnit'] . '">
                     </fieldset>
                 </div>
-                <button type="button" id="' . $count . '" onclick="deleteIngredient(this, \'ingredientAmount\')">Remove Ingredient</button>
+                <button class="delete" type="button" id="' . $count . '" onclick="deleteIngredient(this, \'ingredientAmount\')">Remove Ingredient</button>
             </div>';
             }
             ?>
         </div>
 
-        <button type="button" onclick="addIngredient('ingredients', 'ingredientAmount')">Add Ingredient</button>
+        <button class="add" type="button" onclick="addIngredient('ingredients', 'ingredientAmount')">Add Ingredient</button>
         <input type="hidden" id="ingredientAmount" name="ingredientAmount" value="<?php if (count($ingredient) > 0) {
                                                                                         print count($ingredient);
                                                                                     } else {
                                                                                         print 1;
                                                                                     } ?>">
 
-        <h2>How Do You Make Your Recipe</h2>
+        <h2>How Do You Make Your Recipe?</h2>
         <!-- Instructions Section -->
         <div id='instructions'>
             <div id='instruction'>
@@ -239,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                                                                 print $instruction[0]['fldInstructionDescription'];
                                                                                                             } ?>">
                 </fieldset>
-                <button type="button" id="1" onclick="deleteIngredient(this, 'instructionAmount')">Remove Instruction</button>
+                <button class="delete" type="button" id="1" onclick="deleteIngredient(this, 'instructionAmount')">Remove Instruction</button>
             </div>
             <?php
             for ($i = 1; $i < $instructionAmount; $i++) {
@@ -249,18 +249,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="txtRecipeInstruction' . $count . '">Step ' . $count . '</label>
                     <input type="text" name="txtRecipeInstruction' . $count . '" id="' . $count . '" class="recipeInstruction" value="' . $instruction[$i]['fldInstructionDescription'] . '">
                 </fieldset>
-                <button type="button" id="' . $count . '" onclick="deleteIngredient(this, \'instructionAmount\')">Remove Instruction</button>
+                <button class="delete" type="button" id="' . $count . '" onclick="deleteIngredient(this, \'instructionAmount\')">Remove Instruction</button>
             </div>';
             }
             ?>
         </div>
-        <button type="button" onclick="addIngredient('instructions', 'instructionAmount')">Add Instruction</button>
+        <button type="button" class="add" onclick="addIngredient('instructions', 'instructionAmount')">Add Instruction</button>
         <input type="hidden" id="instructionAmount" name="instructionAmount" value="<?php if (count($instruction) > 0) {
                                                                                         print count($instruction);
                                                                                     } else {
                                                                                         print 1;
                                                                                     } ?>">
-        <input type="submit">
+        <input class="submit" type="submit">
     </form>
 </main>
 <?php

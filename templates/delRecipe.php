@@ -17,7 +17,7 @@ if (isset($_SESSION['username'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $delete = getData('delete');
 
-    if ($delete) {
+    if ($delete == 'true') {
         $recipe->deleteRecipe();
         header("Location: myRecipes.php", true, 303);
         exit();

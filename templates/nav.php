@@ -1,3 +1,8 @@
+<?php
+if (PATH_PARTS['filename'] == "search.php") {
+    $search = (isset($_GET['search'])) ? htmlspecialchars($_GET['search']) : 0;
+}
+?>
 <nav>
     <a class="first <?php
                     if (PATH_PARTS['filename'] == "index") {
@@ -7,7 +12,11 @@
 
     <div class="searchBar">
         <form action='search.php' method='GET'>
-            <input type="text" placeholder="Search.." name="search">
+            <input type="text" placeholder="<?php if (isset($search) && $search != 0) {
+                                                print $search;
+                                            } else {
+                                                print "Search...";
+                                            } ?>" name="search">
             <button type="submit"><i class="fa fa-search"></i></button>
         </form>
     </div>
@@ -17,7 +26,7 @@
         if (PATH_PARTS['filename'] == "myRecipes") {
             print '<a class="myRecipes" href="addRecipe.php">Add A Recipe!</a>';
         } else {
-        print '<a class="myRecipes" href="myRecipes.php">My Recipes</a>' . PHP_EOL;
+            print '<a class="myRecipes" href="myRecipes.php">My Recipes</a>' . PHP_EOL;
         }
         print '<a class="logout ';
         if (PATH_PARTS['filename'] == "logout") {

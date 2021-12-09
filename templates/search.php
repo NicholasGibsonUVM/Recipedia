@@ -6,7 +6,7 @@ $sqlSearch = 'SELECT `tblRecipe`.* FROM `tblRecipe` ';
 $sqlSearch .= 'JOIN `tblRecipeIngredient` ON `pmkRecipeName`=`fpkRecipeName` ';
 $sqlSearch .= 'JOIN `tblIngredients` ON `pmkIngredientId`=`fpkIngredientId` ';
 $sqlSearch .= 'WHERE `fldName` LIKE ? OR `pmkRecipeName` LIKE ? ';
-$sqlSearch .= 'GROUP BY `pmkRecipeName` ';
+$sqlSearch .= 'GROUP BY `pmkRecipeName` ORDER BY `pmkRecipeName`';
 $values = array("%" . $search . "%", "%" . $search . "%");
 $results = $thisDatabaseReader->select($sqlSearch, $values);
 

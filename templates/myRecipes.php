@@ -3,11 +3,11 @@ include 'top.php';
 if (!isset($_SESSION['username'])) {
     header("Location: login.php", true, 303);
 }
-$selectCreated = 'SELECT `pmkRecipeName`, `fldPicture`, `fldRating`, `fldTime`, `fldDescription` FROM `tblRecipe` WHERE `fpkUsername` = "' . $_SESSION['username'] . '"';
+$selectCreated = 'SELECT `pmkRecipeName`, `fldPicture`, `fldRating`, `fldTime`, `fldDescription` FROM `tblRecipe` WHERE `fpkUsername` = "' . $_SESSION['username'] . '" ORDER BY `pmkRecipeName`';
 $userCreatedRecipes = $thisDatabaseReader->select($selectCreated);
 $selectSaved = 'SELECT `pmkRecipeName`, `fldPicture`, `fldRating`, `fldTime`, `fldDescription` FROM `tblRecipe` '; 
 $selectSaved .= 'JOIN `tblUserRecipe` ON `pmkRecipeName`=`fpkName` ';
-$selectSaved .= 'WHERE `fpkUsernameSaved` = "' . $_SESSION['username'] . '"';
+$selectSaved .= 'WHERE `fpkUsernameSaved` = "' . $_SESSION['username'] . '" ORDER BY `pmkRecipeName`';
 $userSavedRecipes = $thisDatabaseReader->select($selectSaved);
 if (DEBUG) {
     print_r($userCreatedRecipes);

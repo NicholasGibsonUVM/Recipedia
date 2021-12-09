@@ -7,7 +7,7 @@ $recipe = new Recipe($recipeName);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $delete = getData('delete');
 
-    if ($delete) {
+    if ($delete == 'true') {
         $recipe->deleteRecipe();
         header("Location: displayUser.php?usr=" . $user, true, 303);
         exit();

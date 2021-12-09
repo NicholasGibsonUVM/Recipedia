@@ -1,44 +1,73 @@
-.createdRecipes, .savedRecipes, .returnedRecipes {
-    margin: 2%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 1%;
+.createdRecipes,
+.savedRecipes,
+.returnedRecipes {
+  margin: 2%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 20px;
 }
 
 .recipePreview {
-    text-align: center;
-    box-shadow: 0 1px 5px 1px #000000;
-    flex: 1;
-    width: 31%;
+  text-align: center;
+  box-shadow: 0 1px 5px 1px #000000;
+  flex: 1;
+  transition-property: box-shadow;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
+  width: 33%;
+  flex-basis: 30%;
+  border-radius: 10px;
+}
+
+.recipePreview:hover {
+  box-shadow: 0 1px 10px 1px #000000;
+  transition-property: box-shadow;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
 }
 
 .recipePreview a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 .recipePreview h1 {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 .recipePreview h2 {
-    font-size: 1.2em;;
+  font-size: 1.2em;
 }
 
 .recipePicture img {
-    height:250px;
-    width: 100%;
-    width: -moz-available;          /* WebKit-based browsers will ignore this. */
-    width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
-    width: fill-available;
-    object-fit: contain;
+  height: 250px;
+  width: 100%;
+  width: -moz-available; /* WebKit-based browsers will ignore this. */
+  width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  width: fill-available;
+  object-fit: contain;
+}
+
+.featuredRecipe {
+    column-gap: 15px;
+}
+
+@media (max-width: 1000px) {
+    .featuredRecipe .recipePreview:nth-child(2) {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 600px) {
-    .recipePreview {
-        width: 100%;
-    }
+  .createdRecipes,
+  .savedRecipes {
+    row-gap: 10px;
+  }
+  .recipePreview {
+    width: 100%;
+    flex-basis: 100%;
+  }
 }

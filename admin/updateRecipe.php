@@ -215,9 +215,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="submit">
     </form>
 </main>
-<?php
-include 'footer.php';
-?>
 <script>
     function addIngredient(parentName, counterName) {
         var parent = document.getElementById(parentName);

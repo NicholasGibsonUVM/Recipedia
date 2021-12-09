@@ -79,18 +79,18 @@ if (DEBUG) {
     <?php
     if (!$author) {
         if (!$saved) {
-            print '<form method="post">';
+            print '<form method="post" class="recipeForm">';
             print '<input type="hidden" name="save" value="true">';
             print '<button>Save Recipe</button>';
             print '</form>';
         } else {
-            print '<form method="post">';
+            print '<form method="post" class="recipeForm">';
             print '<input type="hidden" name="save" value="false">';
             print '<button>Unsave Recipe</button>';
             print '</form>';
         }
     } else {
-        print '<form method="post">';
+        print '<form method="post" class="recipeForm">';
         print '<input type="submit" name="change" value="Edit">';
         print '<input type="submit" name="change" value="Delete">';
         print '</form>';
