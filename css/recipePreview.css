@@ -55,7 +55,7 @@
     column-gap: 15px;
 }
 
-@media (max-width: 1000px) {
+@media only screen and (max-width: 1000px) {
     .featuredRecipe .recipePreview:nth-child(2) {
         display: none;
     }

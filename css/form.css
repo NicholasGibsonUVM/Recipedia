@@ -75,7 +75,7 @@ div fieldset {
     padding: .5% 8%;
 }
 
-@media (max-width: 1000px) {
+@media only screen and (max-width: 1000px) {
   .form {
     width: 95%;
     border-radius: none;

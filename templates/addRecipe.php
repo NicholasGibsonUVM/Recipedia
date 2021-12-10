@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pictureLoc = basename($_FILES["txtRecipeImage"]["name"]);
         } else if (strlen($updateName) != 0  && $_FILES["txtRecipeImage"]['size'] < 41943040) {
             $pictureLoc = $pictureLoc;
-        } else if ($_FILES["txtRecipeImage"]['size'] >= 41943040){
+        } else if ($_FILES["txtRecipeImage"]['size'] >= 41943040) {
             $dataIsGood = false;
             print '<p>Must upload a smaller image</p>';
         } else {
@@ -132,7 +132,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         } else {
-            if ($updateRecipe->editRecipe($main, $ingredient, $instruction)) {
+            $imageMoved = true;
+            if ($_FILES["txtRecipeImage"]['size'] != 0) {
+                if (!move_uploaded_file($_FILES["txtRecipeImage"]["tmp_name"], $target_file)) {
+                    $imageMoved = false;
+                }
+            }
+            if ($imageMoved && $updateRecipe->editRecipe($main, $ingredient, $instruction)) {
                 if (DEBUG) {
                     print '<h1>Updated</h1>';
                 } else {
