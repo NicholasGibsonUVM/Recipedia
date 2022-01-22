@@ -38,7 +38,7 @@ class Recipe
 
     public function setSaved()
     {
-        $selectSaved = 'SELECT * FROM `tblUserRecipe` WHERE `fpkRecipeName` = "' . $this->recipeName . '"';
+        $selectSaved = 'SELECT * FROM `tblUserRecipe` WHERE `fpkName` = "' . $this->recipeName . '"';
         $this->usersSaved = $this->recipeDatabaseReader->select($selectSaved);
     }
 
